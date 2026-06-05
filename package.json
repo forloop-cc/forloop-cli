@@ -1,0 +1,49 @@
+{
+  "name": "forloop-cli",
+  "version": "0.2.0",
+  "description": "Command-line interface for the ForLoop AI development platform",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "forloop",
+    "cli",
+    "ai",
+    "sprint",
+    "agile"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forloop-cc/forloop-cli"
+  },
+  "bin": {
+    "forloop": "./dist/forloop.mjs"
+  },
+  "files": [
+    "dist/",
+    "install.sh",
+    "README.md",
+    "ERRORS.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "node build.mjs",
+    "dev": "npx tsx src/main.ts",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@forloop/opencode-plugin": "file:../forloop-opencode-plugin-planner",
+    "@opencode-ai/plugin": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.37",
+    "esbuild": "^0.25.12",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

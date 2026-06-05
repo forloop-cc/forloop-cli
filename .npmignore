@@ -1,0 +1,11 @@
+__tests__/
+src/
+node_modules/
+vitest.config.ts
+build.mjs
+tsconfig.json
+.eslintrc.json
+.prettierrc
+.prettierignore
+*.log
+.DS_Store
