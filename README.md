@@ -1,4 +1,4 @@
-# forloop-cli
+# @forloop-cc/forloop-cli
 
 Command-line interface for the [ForLoop](https://forloop.cc) AI development platform. Manage sprints, stories, files, AI agents, and organizations without leaving your terminal.
 
@@ -56,14 +56,14 @@ Command-line interface for the [ForLoop](https://forloop.cc) AI development plat
 ### Install Globally
 
 ```bash
-npm install -g forloop-cli
+npm install -g @forloop-cc/forloop-cli
 ```
 
 ### Verify Installation
 
 ```bash
 forloop --version
-# Output: forloop 0.2.0
+# Output: forloop 0.2.1
 ```
 
 ---
@@ -99,10 +99,7 @@ That's it. You're connected.
 
 Visit the ForLoop settings page to generate a token:
 
-| Environment | URL |
-|-------------|-----|
 | Production | https://forloop.cc/profile?tab=api-tokens |
-| Development | https://dev.forloop.cc/profile?tab=api-tokens |
 
 Tokens start with `floop_`. Create a token with at least these scopes:
 - `sprint:read`, `sprint:write`
@@ -131,69 +128,6 @@ forloop auth logout          # Remove saved token
 ```
 
 ---
-
-## Environments
-
-ForLoop has two environments — **Production** and **Development**. By default, the CLI connects to production. Use the development environment when you want to test features or work on staging data without affecting production.
-
-### Production (default)
-
-No extra setup needed. The CLI connects to `https://api.forloop.cc` automatically.
-
-```bash
-forloop sprint list
-```
-
-### Development
-
-The development environment connects to `https://api.dev.forloop.cc`. You need two things:
-
-1. **A dev API token** — create one at https://dev.forloop.cc/profile?tab=api-tokens
-2. **Environment variables** — the CLI requires explicit opt-in for security:
-
-```bash
-export FORLOOP_ENV=development
-export FORLOOP_ALLOW_DEV=true
-forloop auth login --api-key floop_xxxxx
-```
-
-> **Security note:** `FORLOOP_ALLOW_DEV=true` is required because dev API tokens have fewer restrictions. This flag prevents accidentally using a dev token against production data. Set it only when you intend to use the dev environment.
-
-### One-Liner for Dev
-
-```bash
-FORLOOP_ENV=development FORLOOP_ALLOW_DEV=true forloop sprint list
-```
-
-### Persistent Dev Setup
-
-To always use dev for a specific project, add an `opencode.json` in your project root:
-
-```json
-{
-  "forloop": {
-    "apiUrl": "https://api.dev.forloop.cc",
-    "allowDev": true
-  }
-}
-```
-
-Or set it globally in `~/.config/opencode/config.json`:
-
-```json
-{
-  "forloop": {
-    "apiUrl": "https://api.dev.forloop.cc",
-    "allowDev": true
-  }
-}
-```
-
-| Question | Answer |
-|----------|--------|
-| What happens if I don't set `FORLOOP_ALLOW_DEV=true`? | The CLI will ignore your dev URL and connect to production instead, with a warning message |
-| Can I switch between prod and dev per-command? | Yes, the `--api-url` flag or `FORLOOP_ENV` env var overrides the config |
-| Do I need separate tokens for prod and dev? | Yes — create one token at each environment's settings page |
 
 ---
 
@@ -419,9 +353,7 @@ These flags work with every command:
 | Variable | Purpose |
 |----------|---------|
 | `FORLOOP_API_KEY` | API token (alternative to `forloop auth login`) |
-| `FORLOOP_API_URL` | Override the API base URL |
-| `FORLOOP_ENV` | Set to `production` or `development` |
-| `FORLOOP_ALLOW_DEV` | Set to `true` to enable dev environment URLs |
+| `FORLOOP_API_URL` | Override the API base URL (e.g., `https://api.dev.forloop.cc`) |
 | `FORLOOP_SPRINT_ID` | Default sprint ID for commands that auto-detect it |
 
 ---
@@ -561,8 +493,7 @@ The CLI resolves configuration from these sources, in priority order:
 ```json
 {
   "forloop": {
-    "apiUrl": "https://api.dev.forloop.cc",
-    "allowDev": true
+    "apiUrl": "https://api.forloop.cc"
   }
 }
 ```
@@ -572,8 +503,7 @@ The CLI resolves configuration from these sources, in priority order:
 ```json
 {
   "forloop": {
-    "apiUrl": "https://api.forloop.cc",
-    "allowDev": false
+    "apiUrl": "https://api.forloop.cc"
   }
 }
 ```
@@ -600,23 +530,11 @@ export FORLOOP_API_KEY=floop_xxxxx
 
 Tokens must start with `floop_`. Double-check you copied the entire token from https://forloop.cc/profile?tab=api-tokens.
 
-### "Dev API URL ignored"
-
-The CLI refuses dev URLs unless you explicitly opt in:
-
-```bash
-export FORLOOP_ALLOW_DEV=true
-export FORLOOP_ENV=development
-```
-
-This is a security measure — dev tokens should never accidentally hit production APIs.
-
 ### "Forbidden" or "Not Found" on Specific Resources
 
 Some resources (organizations, stories, files) return 403/404 when you don't have access or they don't exist in your current environment. Try:
-- Checking you're in the right environment (prod vs dev)
 - Verifying the resource ID exists with `forloop sprint get --id <id>`
-- Checking that your token has the required scopes
+- Checking your token has the required scopes
 
 ### Verbose Debugging
 

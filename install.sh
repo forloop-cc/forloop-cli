@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/forloop-cc/forloop-cli/main/install.sh | bash
-#   npm install -g forloop-cli
+#   npm install -g @forloop-cc/forloop-cli
 
 # ── Colors ────────────────────────────────────────────────────────────────────
 if [ -t 1 ]; then
@@ -59,12 +59,12 @@ print_success "npm $(npm -v)"
 echo ""
 
 # ── Install ───────────────────────────────────────────────────────────────────
-echo "Installing forloop-cli..."
+echo "Installing @forloop-cc/forloop-cli..."
 
-if npm install -g forloop-cli 2>/dev/null; then
+if npm install -g @forloop-cc/forloop-cli 2>/dev/null; then
     print_success "Installed successfully"
 else
-    print_error "Installation failed. Try: npm install -g forloop-cli"
+    print_error "Installation failed. Try: npm install -g @forloop-cc/forloop-cli"
     print_info "Or clone manually: git clone https://github.com/forloop-cc/forloop-cli.git"
     exit 1
 fi
@@ -74,7 +74,7 @@ echo ""
 # ── Verify ────────────────────────────────────────────────────────────────────
 echo "Verifying installation..."
 FORLOOP_VERSION=$(forloop --version 2>&1)
-print_success "forloop-cli ${FORLOOP_VERSION#forloop } installed"
+print_success "@forloop-cc/forloop-cli ${FORLOOP_VERSION#forloop } installed"
 
 echo ""
 echo -e "${BOLD}Next steps:${NC}"
