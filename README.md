@@ -8,7 +8,6 @@ Command-line interface for the [ForLoop](https://forloop.cc) AI development plat
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Authentication](#authentication)
-- [Environments](#environments)
 - [Commands](#commands)
   - [Sprint Operations](#sprint-operations)
   - [Story Operations](#story-operations)
@@ -63,7 +62,7 @@ npm install -g @forloop-cc/forloop-cli
 
 ```bash
 forloop --version
-# Output: forloop 0.2.1
+# Output: forloop 0.2.4
 ```
 
 ---
@@ -129,10 +128,6 @@ forloop auth logout          # Remove saved token
 
 ---
 
----
-
-## Commands
-
 ### Sprint Operations
 
 Work with sprints — the containers that hold your stories and track development cycles.
@@ -141,11 +136,14 @@ Work with sprints — the containers that hold your stories and track developmen
 # List all sprints you have access to
 forloop sprint list
 forloop sprint list --org-id 1
+forloop sprint list --include-system-org    # Include system organization sprints
+forloop sprint list --output json           # Structured JSON output
 
 # Get sprint details, including all stories
 forloop sprint get --id 66
 forloop sprint get --id 66 --no-stories     # Exclude stories
 forloop sprint get --id 66 --no-files       # Exclude files
+forloop sprint get --id 66 --output json    # Structured JSON output
 
 # Create a new sprint
 forloop sprint create \
@@ -193,6 +191,7 @@ forloop story create \
 # Read story details, including developer comments
 forloop story get --id 229
 forloop story get --id 229 --no-comments
+forloop story get --id 229 --output json     # Structured JSON output
 
 # Update a story
 forloop story update --id 229 --status in_progress
@@ -210,7 +209,11 @@ Templates define the structure of your stories. List available templates to see 
 
 ```bash
 forloop template list
-# Output shows: Basic Task, Basic Note, Schedule Meeting, New Folder
+# Built-in templates: Basic Task (basic-task), Basic Note (basic-note)
+# Server templates: Schedule Meeting (schedule-meeting), New Folder (doc-folder)
+
+# JSON output:
+forloop template list --output json
 ```
 
 ### Agent Operations
@@ -220,6 +223,7 @@ Interact with ForLoop's AI agents — check their progress, trigger new work, an
 ```bash
 # See what AI agents have discussed in the past
 forloop agent history --sprint 66 --limit 20
+forloop agent history --sprint 66 --output json
 
 # Check if a developer task is running, completed, or failed
 forloop agent developer-status --sprint 66
@@ -241,9 +245,11 @@ Organizations group sprints and control access for teams.
 # List organizations you belong to
 forloop org list
 forloop org list --owned-only    # Only orgs you own
+forloop org list --output json    # Structured JSON output
 
 # View organization details
 forloop org get --id 1
+forloop org get --id 1 --output json
 
 # Create an organization (requires Team or Enterprise tier)
 forloop org create \
@@ -261,14 +267,15 @@ Check your profile, limits, and usage.
 ```bash
 # View your profile
 forloop user profile
-# Output: User: TOSHI WORKSHOP JP, Email: ..., Tier: free
+forloop user profile --output json
 
 # Check your quota limits and current usage
 forloop user quotas
-# Output: Stories used: 23/100, Storage used: 17KB/3GB, etc.
+forloop user quotas --output json
 
 # Check quota usage for a specific organization
 forloop org quotas --org-id 1
+forloop org quotas --org-id 1 --output json
 ```
 
 ### File Operations
@@ -282,6 +289,7 @@ forloop file upload --path ./mockup.png --sprint 66 --folder designs
 
 # List all files in a sprint
 forloop file list --sprint 66
+forloop file list --sprint 66 --output json
 
 # Generate a download link
 forloop file download --id 84
