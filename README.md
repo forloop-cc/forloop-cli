@@ -1,5 +1,7 @@
 # @forloop-cc/forloop-cli
 
+[English](README.md) · [中文](README_zh.md) · [日本語](README_ja.md)
+
 Command-line interface for the [ForLoop](https://forloop.cc) AI development platform. Manage sprints, stories, files, AI agents, and organizations without leaving your terminal.
 
 ## Table of Contents

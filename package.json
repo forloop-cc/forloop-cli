@@ -1,6 +1,6 @@
 {
   "name": "@forloop-cc/forloop-cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Command-line interface for the ForLoop AI development platform",
   "type": "module",
   "license": "MIT",
