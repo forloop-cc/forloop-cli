@@ -37,6 +37,8 @@
 
 [ForLoop](https://forloop.cc) 是一个用于自主开发和部署的 AI 代理平台。将其视为团队的指挥中心——一个 AI 代理和人类在 Sprint、用户故事和代码交付上协作的共享空间。
 
+**全部基于 Loop Engineering 构建**——一个持续反馈循环：Plan（规划）→ Code（编码）→ Review（审查）→ Deploy（部署）→ Learn（学习）。每个循环都会生成数据反馈到下一个循环，使您的团队在每次迭代中越来越快。此 CLI 驱动 **Plan（规划）** 和 **Manage（管理）** 阶段，将您的终端直接连接到 ForLoop 的 Sprint 平台。
+
 **使用此 CLI，您可以：**
 - 从终端规划 Sprint 并创建用户故事
 - 实时查看 AI 开发代理正在构建的内容

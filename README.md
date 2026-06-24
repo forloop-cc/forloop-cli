@@ -37,6 +37,8 @@ Command-line interface for the [ForLoop](https://forloop.cc) AI development plat
 
 [ForLoop](https://forloop.cc) is an AI agent platform for autonomous development and deployment. Think of it as your team's command center — a shared space where AI agents and humans collaborate on sprints, stories, and shipping code.
 
+**All built on Loop Engineering** — a continuous feedback loop of Plan → Code → Review → Deploy → Learn. Every cycle generates data that feeds into the next, making your team faster with every iteration. This CLI powers the **Plan** and **Manage** phases, connecting your terminal directly to ForLoop's sprint platform.
+
 **With this CLI you can:**
 - Plan sprints and create stories from your terminal
 - Check what AI developer agents are building in real time
