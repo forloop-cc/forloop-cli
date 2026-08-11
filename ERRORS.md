@@ -74,7 +74,7 @@ No error scenarios — silently clears the token.
 
 | Scenario | Error Message |
 |---|---|
-| `--confirm` not provided | `Error: --confirm is required to permanently delete a sprint.` |
+| `--confirm` not provided | `Error: --confirm is required to permanently delete a space.` |
 | Sprint not found | `ForLoop API DELETE /api/opencode/sprints/<id> failed: 404 Not Found` |
 
 ---
