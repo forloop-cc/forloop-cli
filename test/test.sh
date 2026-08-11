@@ -111,15 +111,15 @@ fi
 
 header "Stage 4: Sprint"
 
-forloop sprint list --non-interactive 2>&1 | grep -qE "Sprints|No sprints|\[|#" && pass "sprint list" || fail "sprint list"
-forloop sprint list --include-system-org --non-interactive > /dev/null 2>&1 && pass "sprint list --include-system-org" || skip "sprint list --include-system-org"
+forloop space-sprint list --non-interactive 2>&1 | grep -qE "Sprints|No sprints|\[|#" && pass "sprint list" || fail "sprint list"
+forloop space-sprint list --include-system-org --non-interactive > /dev/null 2>&1 && pass "sprint list --include-system-org" || skip "sprint list --include-system-org"
 
 # Find an existing sprint to test get
-EXISTING_SPRINT=$(forloop sprint list --non-interactive 2>&1 | grep -oE '#[0-9]+' | head -1 | tr -d '#')
+EXISTING_SPRINT=$(forloop space-sprint list --non-interactive 2>&1 | grep -oE '#[0-9]+' | head -1 | tr -d '#')
 if [ -n "$EXISTING_SPRINT" ]; then
-  GET_OUT=$(forloop sprint get --id "$EXISTING_SPRINT" --non-interactive 2>&1)
+  GET_OUT=$(forloop space-sprint get --id "$EXISTING_SPRINT" --non-interactive 2>&1)
   echo "$GET_OUT" | grep -qE "Sprint|Title|Status" && pass "sprint get (#$EXISTING_SPRINT)" || fail "sprint get"
-  forloop sprint get --id "$EXISTING_SPRINT" --no-stories --non-interactive > /dev/null 2>&1 && pass "sprint get --no-stories" || skip "sprint get --no-stories"
+  forloop space-sprint get --id "$EXISTING_SPRINT" --no-stories --non-interactive > /dev/null 2>&1 && pass "sprint get --no-stories" || skip "sprint get --no-stories"
 else
   skip "sprint get (no sprints)"
 fi
@@ -128,7 +128,7 @@ fi
 
 header "Stage 5: Sprint & Story Write"
 SPRINT_TITLE="cli-test-$(date +%Y%m%d-%H%M%S)"
-SPRINT_OUT=$(timeout 15 forloop sprint create \
+SPRINT_OUT=$(timeout 15 forloop space-sprint create \
   --title "$SPRINT_TITLE" \
   --start-date "$(date +%Y-%m-%d)" \
   --end-date "$(date -d '+7 days' +%Y-%m-%d 2>/dev/null || date -v+7d +%Y-%m-%d)" \
@@ -144,8 +144,8 @@ else
   TEST_SPRINT_ID=$(echo "$SPRINT_OUT" | grep -oE '#[0-9]+' | head -1 | tr -d '#')
   if [ -n "$TEST_SPRINT_ID" ]; then
     pass "sprint create (#$TEST_SPRINT_ID)"
-    forloop sprint get --id "$TEST_SPRINT_ID" --non-interactive 2>&1 | grep -q "$SPRINT_TITLE" && pass "sprint get (own)" || fail "sprint get (own)"
-    forloop sprint update --id "$TEST_SPRINT_ID" --description "Updated by CLI test" --non-interactive > /dev/null 2>&1 && pass "sprint update" || fail "sprint update"
+    forloop space-sprint get --id "$TEST_SPRINT_ID" --non-interactive 2>&1 | grep -q "$SPRINT_TITLE" && pass "sprint get (own)" || fail "sprint get (own)"
+    forloop space-sprint update --id "$TEST_SPRINT_ID" --description "Updated by CLI test" --non-interactive > /dev/null 2>&1 && pass "sprint update" || fail "sprint update"
 
     # Story CRUD
     STORY_OUT=$(forloop story create \
@@ -219,7 +219,7 @@ fi
 
 header "Stage 8: Global Flags"
 
-forloop sprint list --non-interactive --quiet > /dev/null 2>&1 && pass "--quiet" || fail "--quiet"
+forloop space-sprint list --non-interactive --quiet > /dev/null 2>&1 && pass "--quiet" || fail "--quiet"
 forloop template list --non-interactive > /dev/null 2>&1 && pass "--non-interactive" || fail "--non-interactive"
 forloop --version > /dev/null 2>&1 && pass "--version" || fail "--version"
 forloop --help 2>&1 | grep -q "Usage:" && pass "--help" || fail "--help"
@@ -227,7 +227,7 @@ forloop --help 2>&1 | grep -q "Usage:" && pass "--help" || fail "--help"
 # Error handling
 forloop story create 2>&1 | grep -qE "require|Error|Usage" && pass "missing args shows error" || fail "missing args"
 INVALID_EXIT=0
-forloop sprint delete --id 999999 --confirm --non-interactive > /dev/null 2>&1 || INVALID_EXIT=$?
+forloop space-sprint delete --id 999999 --confirm --non-interactive > /dev/null 2>&1 || INVALID_EXIT=$?
 [ "$INVALID_EXIT" -ne 0 ] && pass "invalid ID returns error" || skip "invalid ID error check"
 
 # ── Cleanup ───────────────────────────────────────────────────────────────────
@@ -240,7 +240,7 @@ if [ -n "$TEST_STORY_ID" ]; then
   forloop story delete --id "$TEST_STORY_ID" --confirm --non-interactive > /dev/null 2>&1 && pass "story delete" || fail "story delete"
 fi
 if [ -n "$TEST_SPRINT_ID" ]; then
-  forloop sprint delete --id "$TEST_SPRINT_ID" --confirm --non-interactive > /dev/null 2>&1 && pass "sprint delete" || fail "sprint delete"
+  forloop space-sprint delete --id "$TEST_SPRINT_ID" --confirm --non-interactive > /dev/null 2>&1 && pass "sprint delete" || fail "sprint delete"
 fi
 rm -f /tmp/cli-test.txt || true
 

@@ -83,10 +83,10 @@ forloop --version
 forloop auth login --api-key floop_xxxxx
 
 # 3. スプリントを表示
-forloop sprint list
+forloop space-sprint list
 
 # 4. スプリントの詳細を確認
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 5. AIエージェントの動作を確認
 forloop agent developer-status --sprint 66
@@ -138,19 +138,19 @@ forloop auth logout          # 保存されたトークンを削除
 
 ```bash
 # アクセス可能なすべてのスプリントを一覧表示
-forloop sprint list
-forloop sprint list --org-id 1
-forloop sprint list --include-system-org    # システム組織のスプリントを含める
-forloop sprint list --output json           # 構造化JSON出力
+forloop space-sprint list
+forloop space-sprint list --org-id 1
+forloop space-sprint list --include-system-org    # システム組織のスプリントを含める
+forloop space-sprint list --output json           # 構造化JSON出力
 
 # すべてのストーリーを含むスプリントの詳細を取得
-forloop sprint get --id 66
-forloop sprint get --id 66 --no-stories     # ストーリーを除外
-forloop sprint get --id 66 --no-files       # ファイルを除外
-forloop sprint get --id 66 --output json    # 構造化JSON出力
+forloop space-sprint get --id 66
+forloop space-sprint get --id 66 --no-stories     # ストーリーを除外
+forloop space-sprint get --id 66 --no-files       # ファイルを除外
+forloop space-sprint get --id 66 --output json    # 構造化JSON出力
 
 # 新しいスプリントを作成
-forloop sprint create \
+forloop space-sprint create \
   --title "スプリント15" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23 \
@@ -158,11 +158,11 @@ forloop sprint create \
   --org-id 1
 
 # スプリントの詳細を更新
-forloop sprint update --id 66 --title "更新されたタイトル"
-forloop sprint update --id 66 --description "このスプリントの新しい目標"
+forloop space-sprint update --id 66 --title "更新されたタイトル"
+forloop space-sprint update --id 66 --description "このスプリントの新しい目標"
 
 # スプリントを削除（破壊的操作 — --confirm が必要）
-forloop sprint delete --id 66 --confirm
+forloop space-sprint delete --id 66 --confirm
 ```
 
 > **ヒント：** CLIは `FORLOOP_SPRINT_ID` 環境変数または `sprint-66` という名前のgitブランチから自動的にスプリントを検出します。多くの場合 `--id` を省略でき、正しいスプリントが選択されます。
@@ -381,10 +381,10 @@ forloop sync local-to-s3 \
 forloop auth status
 
 # 2. スプリントを見つける
-forloop sprint list
+forloop space-sprint list
 
 # 3. 全体像を読み込む——ストーリー、ステータス、AIエージェント
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 4. 開発者エージェントは既に実行中か？
 forloop agent developer-status --sprint 66
@@ -402,7 +402,7 @@ forloop sync s3-to-local --sprint 66
 
 ```bash
 # 1. スプリントを作成
-forloop sprint create \
+forloop space-sprint create \
   --title "機能X" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23
@@ -429,7 +429,7 @@ forloop agent developer-sprint --sprint 67
 
 # 5. 進捗を監視
 forloop agent developer-status --sprint 67
-forloop sprint get --id 67
+forloop space-sprint get --id 67
 ```
 
 ### ローカルとS3間のファイル同期
@@ -545,7 +545,7 @@ export FORLOOP_API_KEY=floop_xxxxx
 ### 特定のリソースで "Forbidden" または "Not Found"
 
 一部のリソース（組織、ストーリー、ファイル）は、アクセス権がないか現在の環境に存在しない場合に403/404を返します。以下をお試しください：
-- `forloop sprint get --id <id>` でリソースIDの存在を確認
+- `forloop space-sprint get --id <id>` でリソースIDの存在を確認
 - トークンに必要なスコープがあるか確認
 
 ### 詳細なデバッグ
@@ -553,7 +553,7 @@ export FORLOOP_API_KEY=floop_xxxxx
 何かが動作しない場合は、`--verbose` を使用して生のHTTPリクエストを確認します：
 
 ```bash
-forloop sprint get --id 66 --verbose
+forloop space-sprint get --id 66 --verbose
 # 出力:
 # > GET https://api.forloop.cc/api/opencode/sprints/66
 # < 200 OK

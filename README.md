@@ -83,10 +83,10 @@ In about 30 seconds, you'll be connected:
 forloop auth login --api-key floop_xxxxx
 
 # 3. See your sprints
-forloop sprint list
+forloop space-sprint list
 
 # 4. Dive into a sprint
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 5. Check what your AI agents are doing
 forloop agent developer-status --sprint 66
@@ -138,19 +138,19 @@ Work with sprints — the containers that hold your stories and track developmen
 
 ```bash
 # List all sprints you have access to
-forloop sprint list
-forloop sprint list --org-id 1
-forloop sprint list --include-system-org    # Include system organization sprints
-forloop sprint list --output json           # Structured JSON output
+forloop space-sprint list
+forloop space-sprint list --org-id 1
+forloop space-sprint list --include-system-org    # Include system organization sprints
+forloop space-sprint list --output json           # Structured JSON output
 
 # Get sprint details, including all stories
-forloop sprint get --id 66
-forloop sprint get --id 66 --no-stories     # Exclude stories
-forloop sprint get --id 66 --no-files       # Exclude files
-forloop sprint get --id 66 --output json    # Structured JSON output
+forloop space-sprint get --id 66
+forloop space-sprint get --id 66 --no-stories     # Exclude stories
+forloop space-sprint get --id 66 --no-files       # Exclude files
+forloop space-sprint get --id 66 --output json    # Structured JSON output
 
 # Create a new sprint
-forloop sprint create \
+forloop space-sprint create \
   --title "Sprint 15" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23 \
@@ -158,11 +158,11 @@ forloop sprint create \
   --org-id 1
 
 # Update sprint details
-forloop sprint update --id 66 --title "Updated Title"
-forloop sprint update --id 66 --description "New goals for this sprint"
+forloop space-sprint update --id 66 --title "Updated Title"
+forloop space-sprint update --id 66 --description "New goals for this sprint"
 
 # Delete a sprint (destructive — requires --confirm)
-forloop sprint delete --id 66 --confirm
+forloop space-sprint delete --id 66 --confirm
 ```
 
 > **Tip:** The CLI auto-detects your sprint from `FORLOOP_SPRINT_ID` env var or a git branch named `sprint-66`. You can often omit `--id` and the right sprint will be chosen.
@@ -381,10 +381,10 @@ A typical session start — load context, check progress, and understand what's 
 forloop auth status
 
 # 2. Find your sprint
-forloop sprint list
+forloop space-sprint list
 
 # 3. Load the full picture — stories, status, AI agents
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 4. Is the developer agent already running?
 forloop agent developer-status --sprint 66
@@ -402,7 +402,7 @@ Create a sprint, add stories, and let AI agents implement them.
 
 ```bash
 # 1. Create the sprint
-forloop sprint create \
+forloop space-sprint create \
   --title "Feature X" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23
@@ -429,7 +429,7 @@ forloop agent developer-sprint --sprint 67
 
 # 5. Monitor progress
 forloop agent developer-status --sprint 67
-forloop sprint get --id 67
+forloop space-sprint get --id 67
 ```
 
 ### Sync Files Between Local and S3
@@ -545,7 +545,7 @@ Tokens must start with `floop_`. Double-check you copied the entire token from h
 ### "Forbidden" or "Not Found" on Specific Resources
 
 Some resources (organizations, stories, files) return 403/404 when you don't have access or they don't exist in your current environment. Try:
-- Verifying the resource ID exists with `forloop sprint get --id <id>`
+- Verifying the resource ID exists with `forloop space-sprint get --id <id>`
 - Checking your token has the required scopes
 
 ### Verbose Debugging
@@ -553,7 +553,7 @@ Some resources (organizations, stories, files) return 403/404 when you don't hav
 When something isn't working, use `--verbose` to see the raw HTTP requests:
 
 ```bash
-forloop sprint get --id 66 --verbose
+forloop space-sprint get --id 66 --verbose
 # Output:
 # > GET https://api.forloop.cc/api/opencode/sprints/66
 # < 200 OK

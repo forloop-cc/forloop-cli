@@ -83,10 +83,10 @@ forloop --version
 forloop auth login --api-key floop_xxxxx
 
 # 3. 查看您的 Sprint
-forloop sprint list
+forloop space-sprint list
 
 # 4. 深入查看一个 Sprint
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 5. 检查 AI 代理正在做什么
 forloop agent developer-status --sprint 66
@@ -138,19 +138,19 @@ forloop auth logout          # 移除已保存的令牌
 
 ```bash
 # 列出所有有访问权限的 Sprint
-forloop sprint list
-forloop sprint list --org-id 1
-forloop sprint list --include-system-org    # 包含系统组织 Sprint
-forloop sprint list --output json           # 结构化 JSON 输出
+forloop space-sprint list
+forloop space-sprint list --org-id 1
+forloop space-sprint list --include-system-org    # 包含系统组织 Sprint
+forloop space-sprint list --output json           # 结构化 JSON 输出
 
 # 获取 Sprint 详情，包含所有用户故事
-forloop sprint get --id 66
-forloop sprint get --id 66 --no-stories     # 排除用户故事
-forloop sprint get --id 66 --no-files       # 排除文件
-forloop sprint get --id 66 --output json    # 结构化 JSON 输出
+forloop space-sprint get --id 66
+forloop space-sprint get --id 66 --no-stories     # 排除用户故事
+forloop space-sprint get --id 66 --no-files       # 排除文件
+forloop space-sprint get --id 66 --output json    # 结构化 JSON 输出
 
 # 创建一个新的 Sprint
-forloop sprint create \
+forloop space-sprint create \
   --title "Sprint 15" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23 \
@@ -158,11 +158,11 @@ forloop sprint create \
   --org-id 1
 
 # 更新 Sprint 详情
-forloop sprint update --id 66 --title "更新后的标题"
-forloop sprint update --id 66 --description "此 Sprint 的新目标"
+forloop space-sprint update --id 66 --title "更新后的标题"
+forloop space-sprint update --id 66 --description "此 Sprint 的新目标"
 
 # 删除 Sprint（破坏性操作——需要 --confirm）
-forloop sprint delete --id 66 --confirm
+forloop space-sprint delete --id 66 --confirm
 ```
 
 > **提示：** CLI 会自动从 `FORLOOP_SPRINT_ID` 环境变量或名为 `sprint-66` 的 git 分支中检测 Sprint。您通常可以省略 `--id`，会自动选择正确的 Sprint。
@@ -381,10 +381,10 @@ forloop sync local-to-s3 \
 forloop auth status
 
 # 2. 找到您的 Sprint
-forloop sprint list
+forloop space-sprint list
 
 # 3. 加载全貌——用户故事、状态、AI 代理
-forloop sprint get --id 66
+forloop space-sprint get --id 66
 
 # 4. 开发者代理是否已经在运行？
 forloop agent developer-status --sprint 66
@@ -402,7 +402,7 @@ forloop sync s3-to-local --sprint 66
 
 ```bash
 # 1. 创建 Sprint
-forloop sprint create \
+forloop space-sprint create \
   --title "功能 X" \
   --start-date 2026-06-09 \
   --end-date 2026-06-23
@@ -429,7 +429,7 @@ forloop agent developer-sprint --sprint 67
 
 # 5. 监控进度
 forloop agent developer-status --sprint 67
-forloop sprint get --id 67
+forloop space-sprint get --id 67
 ```
 
 ### 本地与 S3 之间同步文件
@@ -545,7 +545,7 @@ export FORLOOP_API_KEY=floop_xxxxx
 ### "Forbidden" 或 "Not Found" 访问特定资源
 
 某些资源（组织、用户故事、文件）在您没有访问权限或它们不存在于当前环境时返回 403/404。尝试：
-- 用 `forloop sprint get --id <id>` 验证资源 ID 是否存在
+- 用 `forloop space-sprint get --id <id>` 验证资源 ID 是否存在
 - 检查您的令牌是否具有所需的权限范围
 
 ### 详细调试
@@ -553,7 +553,7 @@ export FORLOOP_API_KEY=floop_xxxxx
 当某些内容不工作时，使用 `--verbose` 查看原始 HTTP 请求：
 
 ```bash
-forloop sprint get --id 66 --verbose
+forloop space-sprint get --id 66 --verbose
 # 输出：
 # > GET https://api.forloop.cc/api/opencode/sprints/66
 # < 200 OK

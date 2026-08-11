@@ -44,33 +44,33 @@ No error scenarios — silently clears the token.
 
 ## Sprint Commands
 
-### `forloop sprint get`
+### `forloop space-sprint get`
 
 | Scenario | Error Message |
 |---|---|
 | No sprint ID resolved | `Error: No sprint ID resolved. Use --id, set FORLOOP_SPRINT_ID, or use a sprint-XXX branch.` |
 | Sprint not found (404) | `ForLoop API GET /api/opencode/sprints/<id> failed: 404 Not Found` |
 
-### `forloop sprint list`
+### `forloop space-sprint list`
 
 | Scenario | Error Message |
 |---|---|
 | No sprints found | `No sprints found.` |
 
-### `forloop sprint create`
+### `forloop space-sprint create`
 
 | Scenario | Error Message |
 |---|---|
 | Missing `--title`, `--start-date`, or `--end-date` | `Error: --title, --start-date, and --end-date are required` |
 
-### `forloop sprint update`
+### `forloop space-sprint update`
 
 | Scenario | Error Message |
 |---|---|
 | `--id` not provided | `Error: --id is required` |
 | No fields to update | `Error: at least one field to update is required` |
 
-### `forloop sprint delete`
+### `forloop space-sprint delete`
 
 | Scenario | Error Message |
 |---|---|
